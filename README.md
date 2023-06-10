@@ -4,6 +4,6 @@
   <head>
     <meta charset="utf-8">
     <title>Index</title>
-    <a href="index.html">My public website</a>
+    <a href="https://daniel-perry-j.github.io/">My public website</a>
   </head>
 </html>
