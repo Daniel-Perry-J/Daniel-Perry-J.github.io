@@ -1,0 +1,18 @@
+body {
+    background-color: beige;
+    color: black;
+}
+
+.back {
+    background-color: blueviolet;
+    float: right;
+    padding: 10px 24px; /* padding size */
+}
+.back:hover {
+    /* Define the appearance of the button when hovering */
+    background-color: red;
+    color: black;
+    /* You can add additional styles like changing the font, adding a border, etc. */
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 12pt;
+  }

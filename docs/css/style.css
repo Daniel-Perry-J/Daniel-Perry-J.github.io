@@ -1,3 +1,10 @@
+.logo {
+  color: blue;
+  font-size: 50pt;
+  font-family: cursive;
+  font-style: italic;
+}
+
 body {
     color: black;
     text-align: center;
@@ -20,7 +27,16 @@ nav {
   background-color: #04AA6D; /* Green background */
   border: 1px solid green; /* Green border */
   color: white; /* White text */
-  padding: 10px 24px; /* Some padding */
+  padding: 10px 24px; /* padding size */
   cursor: pointer; /* Pointer/hand icon */
-  float: center; /* Float the buttons side by side */
+  float: center; /* centers the buttons side by side */
+}
+
+.btn-group button:hover {
+  /* Define the appearance of the button when hovering */
+  background-color: red;
+  color: black;
+  /* You can add additional styles like changing the font, adding a border, etc. */
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 12pt;
 }
