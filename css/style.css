@@ -1,50 +1,6 @@
+
+
 body {
-    color: black;
-    text-align: center;
-    background-image:linear-gradient(to right,#d1982e, #8b1611);
-    background-size:cover;
-    background-repeat:no-repeat;
+    color: #000;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
-#Daniel_img {
-    width: 400px;
-    height: auto;
-}
-
-.tab{
-    position:relative;
-  }
-  
-  .tab nav{
-    float:left;
-    overflow:hidden;
-    list-style-type: none;
-    display: block;
-    margin-right:1px;
-    left:70px;
-    cursor: pointer;
-    position: relative;
-    color: WHITE;
-    background: #6543F1;  
-  
-  }
-  
-  .tab nav li{
-    display:block;
-    text-decoration: none;
-    color:white;
-    padding:10px;
-  }
-  
-  .tab section{
-    z-index:0;
-    width:70%;
-    padding:5px;
-    position: absolute;
-    top:39px;
-    left:110px;
-    color: black;
-    background: white;
-    border-radius:0px 5px 5px 5px;
-    box-shadow: 0px 2px 2px 0px grey;
-  }
