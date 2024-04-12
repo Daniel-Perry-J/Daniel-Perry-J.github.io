@@ -108,13 +108,13 @@ img {
     height: auto;
 }
 
-#img-container {
+.img-container {
     overflow-x: scroll;
     background-color: #000;
 }
 
-#wide-img {
-    width: 500%;
+.wide-img {
+    width: 300%;
 }
 
 /* ::-webkit-scrollbar {
