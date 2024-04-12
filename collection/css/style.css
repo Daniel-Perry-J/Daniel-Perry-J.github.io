@@ -141,3 +141,9 @@ img {
 .animals {
     background-color: rgb(197, 162, 67);
 }
+
+.map {
+    background-color: #000;
+    color: red;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
