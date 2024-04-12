@@ -11,6 +11,7 @@ header {
 .active {
     background-color: rgba(0, 0, 0, 0.25);
     box-shadow: 0.1em 0.1em 0.5em inset rgba(0, 0, 0, 0.75);
+    color: #1e1e1e;
 }
 
 nav {
@@ -49,12 +50,13 @@ nav ul li a {
 nav ul li a:hover {
     background-color: #196eb3;
     color: #fff;
-    transition: ease-in 1.5s;
+    transition: ease-in 1.0s;
 }
 
 body {
     background-color: #f5f5dc;
     font: 1em sans-serif;
+    color: #071f0f;
 }
 
 #wrapper {
@@ -94,6 +96,13 @@ body {
     color: #1d1133;
 }
 
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-items: center;
+}
+
 img {
     width: 100%;
     height: auto;
@@ -108,9 +117,10 @@ img {
     width: 500%;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
     scrollbar-color: rgb(48, 164, 199);
-}
+    scrollbar-track-color: #196eb3;
+} */
 
 .space {
     background-color: #1e124d;
@@ -118,4 +128,16 @@ img {
 
 .plants {
     background-color: hsl(120, 71%, 14%);
+}
+
+.mountains {
+    background-color: hsl(320, 90%, 24%);
+}
+
+.water {
+    background-color: hsl(202, 80%, 50%);
+}
+
+.animals {
+    background-color: rgb(197, 162, 67);
 }
