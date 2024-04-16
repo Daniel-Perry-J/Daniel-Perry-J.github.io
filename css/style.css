@@ -1,0 +1,32 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font: 1em sans-serif;
+    background-color: hsl(208, 40%, 80%);
+    color: hsl(214, 66%, 10%);
+}
+
+.wrapper {
+    width: 80%;
+    margin: 0 auto;
+}
+
+header {
+    background-color: hsl(172, 70%, 75%);
+    padding: 1em 0.5em;
+    border-bottom: 1em hsl(240, 50%, 50%) solid;
+}
+
+nav ul {
+    text-decoration: none;
+    list-style: none;
+    padding-left: 0;
+}
+
+footer {
+    background-color: hsl(172, 70%, 75%);
+    padding: 1em 0.5em;
+    border-top: 1em hsl(240, 50%, 50%) solid;
+}
