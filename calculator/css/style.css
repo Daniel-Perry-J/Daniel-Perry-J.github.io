@@ -23,7 +23,16 @@ h1 {
     text-shadow: 4px 4px 4px hsl(120 50% 70% / 50%);
 }
 
+h2 {
+    text-decoration: underline;
+}
+
+p {
+    text-align: left;
+}
+
 button {
+    background-color: aliceblue;
     padding: 1em;
 }
 
@@ -77,6 +86,7 @@ button:hover {
 #operations {
     height: 5%;
     color: hsl(229, 16%, 53%);
+    text-align: right;
 }
 
 #result {
@@ -86,6 +96,7 @@ button:hover {
     align-self: self-start;
     color: #000;
     margin: 0;
+    text-align: right;
 }
 
 .rows {
@@ -116,10 +127,62 @@ button:hover {
     background-color: #7fffd434;
 }
 
+.disabled:hover {
+    background-color: aliceblue;
+    color: grey;
+}
+
+.disabled {
+    color: grey;
+}
+
 #equals {
     background-color: #ff4d0094;
 }
 
 #equals:hover {
     background-color: rgba(199, 4, 4, 0.9);
+}
+
+#fun-buttons {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    top: 5%;
+    right: 10%;
+}
+
+#fun {
+    background: linear-gradient(to top left, black, red, yellow, orange, purple, pink, white);
+    opacity: 0.5;
+    border-radius: 1em;
+    font-size: larger;
+    font-weight: bold;
+    border: #000;
+}
+
+#swap {
+    border-radius: 1em;
+    font-size: larger;
+    font-weight: bold;
+    opacity: 0.5;
+    border: solid 2px;
+}
+
+.off {
+    background-color: #cccccc;
+    border: #fff;
+    color: #000;
+    border-color: #fff;
+}
+.on {
+    background-color: #353535;
+    border: #000;
+    color: #fff;
+    border-color: #000;
+}
+
+#fun:hover, #swap:hover {
+    opacity: 1;
 }
