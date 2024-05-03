@@ -1,0 +1,64 @@
+
+.col {
+    background-image: url('../imgs/tree-bark.jpg');
+    background-position: 50%;
+    background-repeat: repeat-y;
+    background-size: cover;
+    height: 100%;
+    padding: 1em;
+}
+
+.main-content {
+    background-color: aliceblue;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    border: 1px solid black;
+}
+
+header, nav {
+    position: sticky;
+    top: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+h1 {
+    color: #000;
+}
+
+* {
+    border-radius: 5px;
+}
+
+.display1 {
+    background-color: aliceblue;
+    padding: 1em;
+    text-align: center;
+}
+
+.creepy-text {
+    color: red;
+    text-decoration: line-through;
+}
+
+.modal-footer {
+    justify-content: space-between;
+}
+
+.start, .exit {
+    border-radius: 5px;
+    padding: 0.5em 1em;
+    border: none;
+}
+
+.start {
+    background-color: rgb(30, 196, 196);
+}
+
+.exit {
+    background-color: rgb(161, 206, 226);
+}
