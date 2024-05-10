@@ -23,10 +23,40 @@ nav ul {
     text-decoration: none;
     list-style: none;
     padding-left: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.5em;
+}
+
+nav ul li {
+    display: block;
+    align-self: start;
+    transform: translateY(25px);
+}
+
+h1 {
+    transform: translateY(-25px);
 }
 
 footer {
     background-color: hsl(172, 70%, 75%);
     padding: 1em 0.5em;
     border-top: 1em hsl(240, 50%, 50%) solid;
+}
+
+a {
+    padding: 1em 0.5em;
+    border-radius: 5px;
+    border: 1px solid black;
+    background-color: rgb(78, 78, 182);
+    color: aliceblue;
+    text-decoration: none;
+    flex: 1;
+}
+
+a:hover {
+    background-color: rgb(19, 19, 73);
+    color: azure;
+    transition: 1s ease-in;
 }
