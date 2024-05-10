@@ -10,7 +10,7 @@ function displayAstronauts(data) {
         astronautElement.innerHTML = `
         <h2>${astronaut.name}</h2>
         <figure>
-        <img scr="imgs/${loadImg(astronaut.name)}" alt="${astronaut.name}">
+        <img src="imgs/${loadImg(astronaut.name)}" alt="${astronaut.name}">
         </figure>
         <p>Currently stationed aboard the ${astronaut.craft}</p>
       `;
