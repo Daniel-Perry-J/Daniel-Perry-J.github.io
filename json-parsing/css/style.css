@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.starry-bg {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #47344b;
+    overflow-y: scroll;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: rgb(217, 237, 241);
+    box-shadow: 0 0 5px rgba(217, 237, 241, 0.75);
+    border-radius: 50%;
+}
+
+body {
+    font-family: 'Orbitron', sans-serif;
+    background-color: rgb(160, 198, 233);
+}
+
+header {
+    background: #007bff;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+    position: relative;
+}
+
+nav {
+    background: #006fcd;
+    padding: 5px 0;
+}
+
+nav ul {
+    list-style: none;
+    padding: 1em;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 auto;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 1em;
+}
+
+nav ul li a:hover {
+    color: black;
+    background-color: rgb(140, 177, 211);
+    transition: ease-in 1s;
+}
+
+nav ul li .active {
+    border: black solid 5px;
+    background-color: rgba(112, 151, 235, 0.5);
+    color: rgb(163, 224, 93);
+}
+
+p a {
+    text-decoration: none;
+    font-family: 'Courier New', Courier, monospace;
+    color: #fff;
+    padding: 1em 0.5em;
+    border-radius: 5px;
+    background-color: #023366;
+}
+
+p a:hover {
+    color: #000;
+    background-color: #c2dffd;
+    transition: ease-in 1s;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    background-color: rgb(115, 135, 221);
+}
+
+div {
+    text-align: center;
+}
+
+section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.counter h3 {
+    display: block;
+    padding: 1em;
+    text-align: center;
+    color: red;
+    background-color: black;
+}
+
+.astronaut {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 20px;
+    margin: 10px;
+    width: calc(33% - 20px);
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.astronaut h2 {
+    color: #007bff;
+}
+
+figure {
+    border: black 5px solid;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+}
+
+figure img {
+    width: 100%;
+    height: auto;
+}
+
+.planetContainer {
+    display: flex;
+    padding: 20px;
+    margin: 10px;
+    flex-direction: column;
+    background-color: #dee2e6;
+    color: black;
+    text-align: center;
+    width: calc(33% - 20px);
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+.imageContainer {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
