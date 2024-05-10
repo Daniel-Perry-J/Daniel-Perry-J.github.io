@@ -10,7 +10,7 @@ function displayAstronauts(data) {
         astronautElement.innerHTML = `
         <h2>${astronaut.name}</h2>
         <figure>
-        <img scr="imgs/${astronaut.name}.jpg" alt="${astronaut.name}">
+        <img scr="imgs/${loadImg(astronaut.name)}" alt="${astronaut.name}">
         </figure>
         <p>Currently stationed aboard the ${astronaut.craft}</p>
       `;
@@ -22,25 +22,25 @@ function displayAstronauts(data) {
 function loadImg(name) {
     switch (name) {
         case "Jasmin Moghbeli":
-            return 'https://images-assets.nasa.gov/image/NHQ202009080004/NHQ202009080004~orig.jpg';
+            return 'Jasmin-Moghbeli.jpg';
             break;
         case "Andreas Mogensen":
-            return 'https://images-assets.nasa.gov/image/NHQ202403120005/NHQ202403120005~orig.jpg'
+            return 'Andreas-Mogensen.jpg'
             break;
         case "Satoshi Furukawa":
-            return 'https://images-assets.nasa.gov/image/jsc2010e066419/jsc2010e066419~orig.jpg';
+            return 'Satoshi-Furukawa.jpg';
             break;
         case "Konstantin Borisov":
-            return 'https://images-assets.nasa.gov/image/NHQ202403120007/NHQ202403120007~orig.jpg';
+            return 'Konstantin-Borisov.jpg';
             break;
         case "Oleg Kononenko":
-            return 'https://images-assets.nasa.gov/image/jsc2002e43168/jsc2002e43168~orig.jpg';
+            return 'Oleg-Kononenko.jpg';
             break;
         case "Nikolai Chub":
-            return 'https://images-assets.nasa.gov/image/jsc2023e052792/jsc2023e052792~orig.jpg';
+            return 'Nikolai-Chub.jpg';
             break;
         case "Loral O'Hara" :
-            return 'https://live.staticflickr.com/1888/29826576327_a03b366a51_b.jpg';
+            return "Loral-O'Hara.jpg";
             break;
         default:
             return null;
