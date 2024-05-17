@@ -1,0 +1,45 @@
+<HTML>
+<HEAD>
+	<TITLE>Eliza (elizabot.js)</TITLE>
+	<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript" SRC="elizabot.js"></SCRIPT>
+	<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript" SRC="elizadata.js"></SCRIPT>
+  <SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript" SRC="elizasetup.js"></SCRIPT>
+  <link href="elizastyle.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</HEAD>
+
+<BODY onload="window.setTimeout('elizaReset()',100)">
+
+  <div class="flex-center">
+    <H1>Eliza -- The Solider</H1>
+    <TABLE BORDER="0" CELLSPACING="10" CELLPADDING="0">
+      <FORM NAME="e_form" onsubmit="elizaStep();return false">
+        <TR><TD COLSPAN="2"><TEXTAREA NAME="e_display" COLS="60" ROWS="20"></TEXTAREA></TD></TR>
+        <TR class="bottom-row">
+          <TD class="textbox">
+            <INPUT TYPE="text" NAME="e_input">
+            </TD>
+          <TD class="buttons">
+            <INPUT TYPE="submit" VALUE="&nbsp;Send&nbsp;"> 
+              <i class="fa fa-paper-plane"></i>
+             <INPUT TYPE="reset" VALUE="Reset" onClick="window.setTimeout('elizaReset()',100)">
+            </TD>
+        </TR>
+      </FORM>
+    </TABLE>
+    <span class="Instructions"><h2>Instructions</h2>
+      <ul>
+        <li><p>You are a general and Elizabot is a Solider</p></li>
+        <li><p>Try giving the bot commands/orders</p></li>
+        <li><p>Try using the following keywords : mission, report, dismissed</p></li>
+      </ul>
+    </span>
+    
+  </div>
+
+  <footer>
+    <a href="https://chatgpt.com/share/cf322b30-62d6-4877-9848-6206620e065c">Chat GPT conversation here</a>
+  </footer>
+  
+</BODY>
+</HTML>
