@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Library using p5.js</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- <a href="layout-example-site.html">go here</a> -->
+    <header>
+        <h1>My p5.js Game Library</h1>
+        <h1 class="subheader">(currently a singular game)</h1>
+    </header>
+    <div class="wrapper">
+        <div class="container">
+            <a class="game" href="game1/game1.html">
+                <h2 class="game-title">Galactic Fight</h2>
+                <figure>
+                    <img src="game.jpg" alt="Epic AI art of the game">
+                </figure>
+                <div class="description">
+                    <p>Shoot and Blast through waves of attacking space ships.</p>
+                    <p>Try not to get hit by any projectiles or the enemies.</p>
+                    <p>Collect Power Ups to gain an advantage over the powerful foes.</p>
+                </div>
+            </a>
+            <div class="dropdown">
+                <h3 onclick="toggleDropdown()">Achievements (top score / totals)</h3>
+                <div class="dropdown-content">
+                    <ul class="flex-rows">
+                        <li>
+                            <h4>Score</h4>
+                            <ul>
+                                <li>
+                                    <p id="HighScore">HighScore : 0</p>
+                                </li>
+                                <li>
+                                    <p id="LifetimeScore">TotalScore : 0</p>
+                                </li>
+                                <li>
+                                    <p id="Multplier">Multiplier : 0.5x</p>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h4>Progression</h4>
+                            <ul>
+                                <li>
+                                    <p id="Unlocks">Unlocks : 1/1 (100%)</p>
+                                </li>
+                                <li>
+                                    <p id="Upgrades">Upgrades : 0</p>
+                                </li>
+                                <li>
+                                    <p id="Wave">Wave : 0</p>
+                                </li>
+                                <li>
+                                    <p id="Level">Level : 0</p>
+                                </li>
+                                <li>
+                                    <p id="Presitige">Prestiges : 0</p>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <h4>Totals</h4>
+                            <ul>
+                                <li>
+                                    <p id="Defeats">Defeats : 0</p>
+                                </li>
+                                <li>
+                                    <p id="Enemy-Counter">Enemies Defeated : 0</p>
+                                </li>
+                                <li>
+                                    <p id="Boss-Counter">Bosses Defeated : 0</p>
+                                </li>
+                                <li>
+                                    <p id="Stardust-Counter">Total Star Dust Collected : 0</p>
+                                </li>
+                                <li>
+                                    <p id="Time-Counter">Time Spent in Game : 0 days, 0 hours, 0 minutes, 0 seconds</p>
+                                </li>
+                                <li>
+                                    <p id="Distance">Total Distance traveled : 0 (ly), 0 (km)</p>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<footer>
+    <script>
+
+        function toggleDropdown() {
+            var content = document.querySelector('.dropdown .dropdown-content');
+            if (content.style.display === 'block') {
+                content.style.display = 'none';
+            } else {
+                content.style.display = 'block';
+            }
+        }
+    </script>
+
+</footer>
+
+</html>

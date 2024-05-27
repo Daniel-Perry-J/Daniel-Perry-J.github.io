@@ -1,0 +1,149 @@
+* {
+    box-sizing: border-box;
+    border-radius: 0.5em;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: darkcyan;
+}
+
+header {
+    display: inline-block;
+    text-align: center;
+    background-color: darkgreen;
+    color: azure;
+    width: 100%;
+    padding: 0.5em;
+}
+
+.wrapper {
+    display: flex;
+    width: 80%;
+    margin: 0 auto;
+    background-color: rgb(184, 183, 248);
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 0.5em;
+}
+
+.game {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    color: rgb(27, 34, 75);
+}
+
+.description {
+    text-align: left;
+    background-color: #4eaa4f;
+    padding: 1em;
+}
+
+figure {
+    border-radius: 0.5em;
+    width: 80%;
+    height: auto;
+    background-color: gray;
+    border: solid 0.5em rgb(182, 181, 181);
+}
+
+img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+p {
+    text-align: left;
+}
+
+a {
+    border: #000 solid 5px;
+    background-color: #000fe05b;
+    padding: 0.5em;
+}
+
+a:hover {
+    border-color: #e7d914;
+    background-color: #5159ccb6;
+}
+
+h1, h2 {
+    font-size: xx-large;
+}
+
+h3, h4, .subheader {
+    font-size: large;
+}
+
+.game-title, .dropdown {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Dropdown container */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+ul {
+    width: 80%;
+}
+
+
+ul {
+    list-style: none;
+}
+
+/* Dropdown button */
+.dropdown>h3 {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    padding: 1em;
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+h3:hover {
+    background-color: #f1f1f1;
+    color: #000;
+}
+
+.flex-rows {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+.flex-rows>li {
+    background-color: #f1f1f1;
+    padding: 1em;
+}

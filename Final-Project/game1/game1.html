@@ -1,0 +1,30 @@
+<!-- Deferring scripts forces them to load in the order they are called to prevent Reference Errors -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>p5.js Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="../css/game.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1/lib/addons/p5.sound.min.js" defer></script>
+    <script src="https://p5play.org/v3/planck.min.js" defer></script>
+    <script src="https://p5play.org/v3/p5play.js" defer></script>	
+</head>
+<body>
+    <div class="hidden" id="menuContainer">
+        <!-- Defer the loading of menu.js -->
+        <script src="menu.js" defer></script>
+    </div>
+    <div class="show" id="gameContainer">
+        <!-- Defer the loading of game-related scripts -->
+        <script src="sprite.js" defer></script>
+        <script src="hazards.js" defer></script>
+        <script src="projectile.js" defer></script>
+        <script src="enemy.js" defer></script>
+        <script src="player.js" defer></script>
+        <script src="display.js"></script>
+        <script src="events.js" defer></script>
+        <script src="game.js" defer></script>
+    </div>
+</body>
+</html>
