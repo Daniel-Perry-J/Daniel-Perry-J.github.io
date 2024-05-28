@@ -14,15 +14,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    transform: rotate(90deg);
+    /* transform: rotate(90deg); */
     transform-origin: center;
 }
 
-@media (orientation: landscape) {
+/* @media (orientation: landscape) {
     #gameContainer {
         transform: none;
     }
-}
+} */
 
 .hidden {
     display: none;

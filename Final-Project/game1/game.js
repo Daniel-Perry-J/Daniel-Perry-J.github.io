@@ -12,6 +12,10 @@ let enemies = [];
 let multiplier = 1.0;
 let difficulty = 1.0;
 let speed = 1.0;
+// states
+let MENU = 0;
+let GAME = 1;
+let state = GAME;
 
 // constants
 // game speeds
@@ -20,6 +24,7 @@ const FAST = 2.0;
 const NORMAL = 1.0;
 const SLOW = 0.5;
 const VERY_SLOW = 0.25;
+
 
 // called whenever we want to restart the game
 function restartGame() {
@@ -47,22 +52,22 @@ function preload() {
 
 // called on first launch
 function setup() {
-    setOrientation();
+    // setOrientation();
     createCanvas(windowWidth, windowHeight);
     spaceship = new Spaceship();
     highscore = getHighScore();
 }
 
 // forces the screen to landscape if possible
-function setOrientation() {
-    if (screen.orientation && screen.orientation.lock) {
-        screen.orientation.lock('landscape').catch(err => {
-            console.error('Orientation lock failed: ', err);
-        });
-    } else {
-        console.warn('Orientation lock is not supported on this device.');
-    }
-}
+// function setOrientation() {
+//     if (screen.orientation && screen.orientation.lock) {
+//         screen.orientation.lock('landscape').catch(err => {
+//             console.error('Orientation lock failed: ', err);
+//         });
+//     } else {
+//         console.warn('Orientation lock is not supported on this device.');
+//     }
+// }
 
 // called whenever I resize the window
 function windowResized() {
@@ -71,7 +76,7 @@ function windowResized() {
 
 // also called each frame
 // creates an animated background
-function drawBackground(frameCount) {
+function drawBackground() {
     // clear the canvas
     background(0);
 
@@ -80,13 +85,13 @@ function drawBackground(frameCount) {
     image(bgImg, imgX, imgY, width, height);
 
     // update positions
-    imgY += speed * 1.5;
+    imgY += speed * 1.5 * state;
     imgY %= height;
 }
 
 // called every frame
 function draw() {
-    drawBackground(frameCount);
+    drawBackground();
 
     displayScore();
     displayTime();
@@ -101,20 +106,23 @@ function draw() {
         saveHighScore();
         return;
     } else {
-
+        // runs when !gameover
         fireBullets();
 
         spaceship.show();
         spaceship.move();
 
+        if (bullets.length > 0)
+            bullets.forEach((bullet) => bullet.move())
+        if (enemies.length > 0)
+            enemies.forEach((enemies) => enemies.move())
+
         for (let bullet of bullets) {
             bullet.show();
-            bullet.move();
         }
 
         for (let enemy of enemies) {
             enemy.show();
-            enemy.move();
         }
 
         // update difficulty and multipliers

@@ -1,20 +1,15 @@
 // Sprite class
 class Sprite {
     constructor() {
-        this.x;
-        this.y;
-        this.r;
-        this.dx;
-        this.dy;
-        this.height;
-        this.width;
+        this.position = new Vector(0, 0);
+        this.velocity = new Vector(0, 0);
+        this.size = new Vector(0, 0);
+        this.r = Math.max(this.size.x, this.size.y);
         this.img;
         this.animation_list;
     }
     show() {/* Override this method */}
     move() {
-        // Default movement
-        this.x += this.dx;
-        this.y += this.dy;
+        throw new Error("Abstract function can not be called.")
     }
 }
