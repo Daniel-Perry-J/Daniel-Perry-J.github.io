@@ -16,6 +16,8 @@ class Display {
     
 }
 
+let xoffset = 150;
+
 function displayGameover() {
     gameoverDisplay = new Display("Game Over!", width/2 - 100, height/2, 100);
     gameoverDisplay.show();
@@ -24,13 +26,21 @@ function displayGameover() {
 }
 
 function displayScore() {
-    scoreDisplay = new Display("Score : " + score, width - 125, height/6 - 50, 15);
+    if (score >= highscore) {
+        highscore = score;
+    }
+    scoreDisplay = new Display("Score : " + score + "\nHighScore : " + highscore, width - xoffset, height/6 - 50, 15);
     scoreDisplay.show();
 }
 
 function displayTime() {
-    timeDisplay = new Display("" + twoZeros(Math.floor(time/60)) + ":" + twoZeros(time%60), width - 125, height/5 - 50, 15);
+    timeDisplay = new Display("" + twoZeros(Math.floor(time/60)) + ":" + twoZeros(time%60), width - xoffset, height/6 - 80, 15);
     timeDisplay.show();
+}
+
+function displayLives() {
+    lifeDisplay = new Display("Lives : " + twoZeros(spaceship.lives), width - xoffset, height/6 - 100, 15);
+    lifeDisplay.show();
 }
 
 function twoZeros(str) {

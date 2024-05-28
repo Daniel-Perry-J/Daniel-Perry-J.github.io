@@ -11,7 +11,7 @@ class Enemy extends Sprite {
     }
 
     move() {
-        this.y += 2;
+        this.y += 2*speed;
     }
 
     show() {

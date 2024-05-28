@@ -16,7 +16,7 @@ class Bullet extends Projectile {
     }
 
     move() {
-        this.y -= 5;
+        this.y -= 5 * speed;
     }
 
     show() {

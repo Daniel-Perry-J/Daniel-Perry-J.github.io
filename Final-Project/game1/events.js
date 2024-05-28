@@ -9,7 +9,7 @@ function keyPressed() {
     } else if (keyCode === LEFT_ARROW) {
         spaceship.setDir(-1);
     } else if (key === ' ') {
-        bullets.push(new Bullet(spaceship.x, spaceship.y));
+        bulletsHeld = true;
     }
 }
 
@@ -17,6 +17,8 @@ function keyPressed() {
 function keyReleased() {
     if (keyCode === RIGHT_ARROW || keyCode === LEFT_ARROW) {
         spaceship.setDir(0);
+    } else if (key === ' ') {
+        bulletsHeld = false;
     }
 }
 
@@ -26,14 +28,31 @@ function mousePressed() {
     if(gameover) {
         restartGame(); 
     }
+    bulletsHeld = true;
 }
 
 // called when you drag the mouse
-function mouseDragged() {}
+function mouseDragged() {
+    if (mouse.x > spaceship.x) {
+        spaceship.setDir(1);
+    } else {
+        spaceship.setDir(-1);
+    }
+}
+
+// called whenever the mouse cursor is moved
+// function mouseMoved() {
+//     if (mouse.x > spaceship.x) {
+//         spaceship.setDir(1);
+//     } else {
+//         spaceship.setDir(-1);
+//     }
+// }
 
 // called when you lift your finger off the mouse
-function mouseClicked() {
-    bullets.push(new Bullet(spaceship.x, spaceship.y))
+function mouseReleased() {
+    spaceship.setDir(0);
+    bulletsHeld = false;
 }
 
 // called when you touch the screen
@@ -42,7 +61,7 @@ function touchStarted() {
         restartGame(); 
     }
     // Handle shooting on touch start
-    bullets.push(new Bullet(spaceship.x, spaceship.y));
+    bulletsHeld = true;
     return false;
 }
 
@@ -63,5 +82,6 @@ function touchMoved() {
 function touchEnded() {
     // Stop the spaceship when the touch ends
     spaceship.setDir(0);
+    bulletsHeld = false;
     return false;
 }

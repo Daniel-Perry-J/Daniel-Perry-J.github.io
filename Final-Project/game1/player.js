@@ -21,7 +21,7 @@ class Spaceship extends Sprite {
 
     move() {
         // Update the position based on direction and speed
-        this.x += this.xdir * 5;
+        this.x += this.xdir * 5 * speed;
     }
 
     show() {
