@@ -28,7 +28,7 @@ function displayScore() {
     if (score >= highscore) {
         highscore = score;
     }
-    scoreDisplay = new Display("Score : " + nZeros(score, 8) + "\nHighScore : " + highscore, width - xoffset, height/6 - 50, 15);
+    scoreDisplay = new Display("Score : " + nZeros(score, 8) + "\nHighScore : " + nZeros(highscore, 8), width - xoffset, height/6 - 50, 15);
     scoreDisplay.show();
 }
 
@@ -59,9 +59,11 @@ function displayLives() {
 // }
 
 function nZeros(str, n) {
-    let offset = Math.floor(Math.log10(str));
-    if (n-offset > 0) {
-        return "0".repeat(n-offset) + str;
+    let offset = Math.floor(Math.log10(str)) + 1;
+    if (n-offset > 0 && offset < n && offset != NaN && offset != Infinity && offset != -Infinity) {
+        return ("0".repeat(n-offset)) + str;
+    } else if (str == 0 || str === '0') {
+        return ("0".repeat(n));
     }
     return str;
 }
