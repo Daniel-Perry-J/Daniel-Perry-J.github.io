@@ -1,29 +1,43 @@
 // globals
+
+// varibles
 let spaceship = null;
 let score = 0;
 let highscore = 0;
 let time = 0; // in seconds
 let logger = false;
 let gameover = false;
+
 // sprite lists
 let bullets = [];
 let enemies = [];
+
 // modifiers
 let multiplier = 1.0;
 let difficulty = 1.0;
 let speed = 1.0;
+let lspeed = speed;
+
+// constants
+
 // states
 let MENU = 0;
 let GAME = 1;
-let state = GAME;
+let PAUSED = 2;
+let SHOP = 3;
+let UPGRADES = 4;
+let STATS = 5;
+let CUSTOM = 6;
+let SETTINGS = 7;
+let state = MENU;
 
-// constants
 // game speeds
 const HYPER = 4.0;
 const FAST = 2.0;
 const NORMAL = 1.0;
 const SLOW = 0.5;
 const VERY_SLOW = 0.25;
+const STOP = 0;
 
 
 // called whenever we want to restart the game
@@ -35,27 +49,57 @@ function restartGame() {
     time = 0;
     multiplier = 1.0;
     difficulty = 1.0;
-    speed = NORMAL;
+    speed = lspeed;
     setup();
 }
 
 // called to load anything before launching
-let bgImg = null;
+let bgImg = [];
 let imgPath = "";
 let imgX = 0;
 let imgY = 0;
+let numImgs = 14;
+let topBuffer = 0;
+let bottomBuffer = 0;
 function preload() {
-    let n = Math.floor(Math.random() * 5);
-    imgPath = "./assets/imgs/bgs/spacebg_" + n + ".png";
-    bgImg = loadImage(imgPath);
+    // Display loading screen before p5.js loads in
+    const container = document.getElementById("gameContainer");
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = windowWidth;
+    canvas.height = windowHeight;
+
+    // Draw dark background
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Draw white text
+    ctx.fillStyle = '#fff';
+    ctx.font = '24px Arial';
+    ctx.fillText('Loading...', 50, 100);
+
+    container.appendChild(canvas);
+
+    for (let i = 0; i < numImgs; i++) {
+        imgPath = "./assets/imgs/bgs/spacebg_" + i + ".png";
+        bgImg[i] = loadImage(imgPath);
+    }
 }
 
 // called on first launch
 function setup() {
+    // background the first canvas
+    const container = document.getElementById("gameContainer");
+    if (container.className != "hidden") {
+        container.className = "hidden";
+    }
     // setOrientation();
     createCanvas(windowWidth, windowHeight);
     spaceship = new Spaceship();
     highscore = getHighScore();
+    topBuffer = Math.floor(random(numImgs));
+    bottomBuffer = Math.floor(random(numImgs));
 }
 
 // forces the screen to landscape if possible
@@ -80,12 +124,18 @@ function drawBackground() {
     // clear the canvas
     background(0);
 
-    // set img coordinates
-    image(bgImg, imgX, imgY-height, width, height);  // double imgs for smooth layering
-    image(bgImg, imgX, imgY, width, height);
+    // choose a new random img
+    if (imgY + speed * 1.25 * state >= height) {
+        bottomBuffer = topBuffer;
+        topBuffer = Math.floor(random(numImgs));
+    } else {
+        // set img coordinates
+        image(bgImg[topBuffer], imgX, imgY-height, width, height);  // double imgs for smooth layering
+        image(bgImg[bottomBuffer], imgX, imgY, width, height);
+    }
 
     // update positions
-    imgY += speed * 1.5 * state;
+    imgY += speed * 1.25 * state;
     imgY %= height;
 }
 
@@ -93,80 +143,84 @@ function drawBackground() {
 function draw() {
     drawBackground();
 
-    displayScore();
-    displayTime();
-    displayLives();
-
-    if (spaceship.lives < 1) {
-        gameover = true;
-    }
-
-    if (gameover) {
-        displayGameover();
-        saveHighScore();
-        return;
+    if (state == MENU) {
+        displayMenu();
     } else {
-        // runs when !gameover
-        fireBullets();
+        displayScore();
+        displayTime();
+        displayLives();
 
-        spaceship.show();
-        spaceship.move();
-
-        if (bullets.length > 0)
-            bullets.forEach((bullet) => bullet.move())
-        if (enemies.length > 0)
-            enemies.forEach((enemies) => enemies.move())
-
-        for (let bullet of bullets) {
-            bullet.show();
+        if (spaceship.lives < 1) {
+            gameover = true;
         }
 
-        for (let enemy of enemies) {
-            enemy.show();
-        }
+        if (gameover) {
+            displayGameover();
+            saveHighScore();
+            return;
+        } else {
+            // runs when !gameover
+            fireBullets();
 
-        // update difficulty and multipliers
-        difficulty = 1.0 + (0.1) * Math.floor(time/15);
-        multiplier = 1.0 + (0.1) * Math.floor(time/60);
+            spaceship.show();
+            spaceship.move();
 
-        checkCollisions()
-
-        // Prevent player from escaping canvas
-        if (spaceship.x <= spaceship.width) {
-            spaceship.x = width - spaceship.width - 1;
-        } else if (spaceship.x >= width - spaceship.width) {
-            spaceship.x = spaceship.width + 1;
-        }
-
-        // Prevent enemies from leaving canvas
-        for (let j = enemies.length - 1; j >= 0; j--) {
-            if (enemies[j].y >= height - enemies[j].height) {
-                enemies[j].y = enemies[j].height + 1;
+            if (bullets.length > 0) {
+                bullets.forEach((bullet) => bullet.move());
+                bullets.forEach((bullet) => bullet.show());
             }
-        }
-
-        // Delete any bullets leaving the canvas
-        for (let i = bullets.length - 1; i >= 0; i--) {
-            if (bullets[i].y <= bullets[i].height) {
-                bullets.splice(i, 1);
+            if (enemies.length > 0) {
+                enemies.forEach((enemy) => enemy.move());
+                enemies.forEach((enemy) => enemy.show());
             }
-        }
 
-        // Spawn enemies randomly
-        if (frameCount % 60 === 0) {
-            time++;
-            enemies.push(new Enemy());
-            if (logger && frameCount % 500) {
-                console.log(`Player Info`);
-                console.log(`player_x = ${spaceship.x}`);
-                console.log(`player_y = ${spaceship.y}`);
-                console.log(`player_lives : ${spaceship.lives}`);
+            // update difficulty and multipliers
+            difficulty = 1.0 + (0.1) * time;
+            multiplier = 1.0 + (0.1) * Math.floor(time/15);
 
-                console.log(`Sprite Info`);
-                console.log(`Bullets : = ${bullets.length}`);
-                console.log(`Bullets : = ${bullets}`);
-                console.log(`Enemies : = ${enemies.length}`);
-                console.log(`Enemies : = ${enemies}`);
+            checkCollisions()
+
+            // Prevent player from escaping canvas
+            if (spaceship.position.x <= spaceship.size.x) {
+                spaceship.position.x = width - spaceship.size.x - 1;
+            } else if (spaceship.position.x >= width - spaceship.size.x) {
+                spaceship.position.x = spaceship.size.x + 1;
+            }
+
+            // Prevent enemies from leaving canvas
+            for (let j = enemies.length - 1; j >= 0; j--) {
+                if (enemies[j].position.y >= height - enemies[j].size.y) {
+                    //enemies[j].position.y = enemies[j].size.y + 1;
+                    enemies.splice(j, 1);
+                }
+            }
+
+            // Delete any bullets leaving the canvas
+            for (let i = bullets.length - 1; i >= 0; i--) {
+                if (bullets[i].position.y <= bullets[i].size.y) {
+                    bullets.splice(i, 1);
+                }
+            }
+
+            // Spawn enemies randomly
+            if (Math.floor(frameCount/speed) % Math.floor(60/(difficulty*0.25)) === 0)
+                enemies.push(new Enemy(difficulty));
+
+            // code to run every 60 frames
+            if ((Math.floor(frameCount/speed) % 60 === 0) && (state == GAME)) {
+                time++;
+                if (logger && frameCount % 500) {
+                    console.log(`Player Info`);
+                    console.log(`player_x = ${spaceship.position.x}`);
+                    console.log(`player_y = ${spaceship.position.y}`);
+                    console.log(`player_lives : ${spaceship.lives}`);
+
+                    console.log(`Sprite Info`);
+                    console.log(`Bullets : = ${bullets.length}`);
+                    console.log(`Bullets : = ${bullets}`);
+                    console.log(`Enemies : = ${enemies.length}`);
+                    console.log(`Enemies : = ${enemies}`);
+                }
             }
         }
     }
@@ -180,11 +234,17 @@ function checkCollisions() {
             if (!(bullets[i] === undefined) && !(enemies[j] === undefined)) {
                 // bullets hits an enemy
                 if (bullets[i].hits(enemies[j])) {
-                    enemies.splice(j, 1);
-                    bullets.splice(i, 1);
-                    j--;
-                    i--;
-                    score += Math.floor(100 * multiplier);
+                    if (enemies[j].lives - 1 < 1) {
+                        enemies.splice(j, 1);
+                        bullets.splice(i, 1);
+                        j--;
+                        i--;
+                        score += Math.floor(100 * multiplier);
+                    } else {
+                        enemies[j].lives -= 1;
+                        enemies[j].difficulty -= 5;
+                        score += Math.floor(10 * multiplier);
+                    }
                     break;
                 }
             }
@@ -195,8 +255,9 @@ function checkCollisions() {
     for (let j = enemies.length - 1; j >= 0; j--) {
         // enemy hits the player
         if (enemies[j].hits(spaceship)) {
-            spaceship.lives--;
+            spaceship.lives -= (Math.floor(enemies[j].difficulty / 5) + 1) * 5;
             enemies = [];
+            bullets = [];
             break;
         }
     }
@@ -266,8 +327,8 @@ let bulletsHeld = false;
 
 function fireBullets() {
     if (bulletsHeld && frameCount - lastFrameFired > bulletCooldown) {
-        bullets.push(new Bullet(spaceship.x, spaceship.y));
-        frameCount = lastFrameFired;
+        bullets.push(new Bullet(spaceship.position.x, spaceship.position.y));
+        lastFrameFired = frameCount;
     }
 }
 

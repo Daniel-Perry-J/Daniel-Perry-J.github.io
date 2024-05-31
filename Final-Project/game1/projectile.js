@@ -9,24 +9,27 @@ class Projectile extends Hazard {
 class Bullet extends Projectile {
     constructor(x, y) {
         super();
-        this.x = x;
-        this.y = y;
-        this.height = 16;
+        this.position = new Vector(x, y);
+        this.velocity = new Vector(0, -5 * speed);
+        this.size = new Vector(16, 16);
         this.r = 8;
     }
 
     move() {
-        this.y -= 5 * speed;
+        this.velocity.y = -5 * speed * state;
+        if (state == GAME) {
+            addVector(this.position, this.velocity);
+        }
     }
 
     show() {
         fill(50, 150, 255);
-        ellipse(this.x, this.y, this.r * 2);
+        ellipse(this.position.x, this.position.y, this.r * 2);
     }
 
     // Later this should be in hazards
     hits(enemy) {
-        let d = dist(this.x, this.y, enemy.x, enemy.y);
+        let d = dist(this.position.x, this.position.y, enemy.position.x, enemy.position.y);
         return (d < this.r + enemy.r);
     }
 }

@@ -5,13 +5,11 @@ class Spaceship extends Sprite {
         // Call the parent Sprite constructor
         // super(width / 2, height - 40, 20, 20); // x, y, width, height
         super();
-        this.x = width / 2;
-        this.y = height - 40;
-        this.width = 20;
-        this.height = 20;
+        this.position = new Vector(width / 2, height - 40);
+        this.size = new Vector(20, 20);
         this.r = 10;
         this.xdir = 0; // Initial horizontal direction (no movement)
-        this.lives = 3;
+        this.lives = 10;
     }
 
     // dir is a number either -1 (left) or 1 (right)
@@ -21,7 +19,8 @@ class Spaceship extends Sprite {
 
     move() {
         // Update the position based on direction and speed
-        this.x += this.xdir * 5 * speed;
+        this.velocity.x = this.xdir * 5 * speed;
+        addVector(this.position, this.velocity);
     }
 
     show() {
@@ -29,6 +28,6 @@ class Spaceship extends Sprite {
         fill(255); // Set color to white
         noStroke(); // No border
         rectMode(CENTER); // Draw from the center
-        rect(this.x, this.y, this.width, this.height); // Draw the spaceship
+        rect(this.position.x, this.position.y, this.size.x, this.size.y); // Draw the spaceship
     }
 }

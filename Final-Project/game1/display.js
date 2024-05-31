@@ -1,17 +1,16 @@
 
 // display
 class Display {
-    constructor(text, x, y, size) {
+    constructor(text, x, y, textsize) {
         this.text = text;
-        this.x = x;
-        this.y = y;
-        this.size = size;
+        this.position = new Vector(x, y);
+        this.textsize = textsize;
     }
 
     show() {
         fill(255);
-        textSize(this.size);
-        text(this.text, this.x, this.y);
+        textSize(this.textsize);
+        text(this.text, this.position.x, this.position.y);
     }
     
 }
@@ -29,23 +28,40 @@ function displayScore() {
     if (score >= highscore) {
         highscore = score;
     }
-    scoreDisplay = new Display("Score : " + score + "\nHighScore : " + highscore, width - xoffset, height/6 - 50, 15);
+    scoreDisplay = new Display("Score : " + nZeros(score, 8) + "\nHighScore : " + highscore, width - xoffset, height/6 - 50, 15);
     scoreDisplay.show();
 }
 
 function displayTime() {
-    timeDisplay = new Display("" + twoZeros(Math.floor(time/60)) + ":" + twoZeros(time%60), width - xoffset, height/6 - 80, 15);
+    timeDisplay = new Display("" + nZeros(Math.floor(time/60), 2) + ":" + nZeros(time%60, 2), width - xoffset, height/6 - 80, 15);
     timeDisplay.show();
 }
 
 function displayLives() {
-    lifeDisplay = new Display("Lives : " + twoZeros(spaceship.lives), width - xoffset, height/6 - 100, 15);
+    lifeDisplay = new Display("Lives : " + nZeros(spaceship.lives, 4), width - xoffset, height/6 - 100, 15);
     lifeDisplay.show();
 }
 
-function twoZeros(str) {
-    if (str / 10 < 1) {
-        return "0"+str;
+// function twoZeros(str) {
+//     if (str / 10 < 1) {
+//         return "0"+str;
+//     }
+//     return str;
+// }
+
+// function threeZeros(str) {
+//     if (str / 10 < 1) {
+//         return "00"+str;
+//     } else if (str / 100 < 1) {
+//         return "0"+str;
+//     }
+//     return str;
+// }
+
+function nZeros(str, n) {
+    let offset = Math.floor(Math.log10(str));
+    if (n-offset > 0) {
+        return "0".repeat(n-offset) + str;
     }
     return str;
 }

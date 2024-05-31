@@ -4,12 +4,14 @@ function keyPressed() {
     if(gameover) {
         restartGame(); 
     }
-    if (keyCode === RIGHT_ARROW) {
+    if (keyCode === RIGHT_ARROW || key === 'd') {
         spaceship.setDir(1);
-    } else if (keyCode === LEFT_ARROW) {
+    } else if (keyCode === LEFT_ARROW || key === 'a') {
         spaceship.setDir(-1);
     } else if (key === ' ') {
         bulletsHeld = true;
+    } else if (keyCode === ESCAPE) {
+        togglePauseMenu();
     }
 }
 
@@ -33,7 +35,7 @@ function mousePressed() {
 
 // called when you drag the mouse
 function mouseDragged() {
-    if (mouse.x > spaceship.x) {
+    if (mouse.x > spaceship.position.x) {
         spaceship.setDir(1);
     } else {
         spaceship.setDir(-1);
