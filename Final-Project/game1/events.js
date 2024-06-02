@@ -17,7 +17,7 @@ function keyPressed() {
 
 // called whenever a key is released
 function keyReleased() {
-    if (keyCode === RIGHT_ARROW || keyCode === LEFT_ARROW) {
+    if (keyCode === RIGHT_ARROW || keyCode === LEFT_ARROW || key === 'd' || key === 'a') {
         spaceship.setDir(0);
     } else if (key === ' ') {
         bulletsHeld = false;
@@ -35,7 +35,7 @@ function mousePressed() {
 
 // called when you drag the mouse
 function mouseDragged() {
-    if (mouse.x > spaceship.position.x) {
+    if (mouseX > spaceship.position.x) {
         spaceship.setDir(1);
     } else {
         spaceship.setDir(-1);

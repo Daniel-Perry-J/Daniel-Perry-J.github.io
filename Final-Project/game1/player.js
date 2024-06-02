@@ -1,3 +1,21 @@
+let NONE = 0;
+let SHIELD = 1;
+let MORE_BULLETS = 2;
+let HEAVY_IMPACT = 3;
+let CLEAR = 4;
+let DOUBLE_MULTIPLIER = 5;
+
+class Powerup extends Sprite {
+    constructor() {
+        super();
+        this.position = new Vector(random(width-20) + 10, 0);
+        this.velocity = new Vector(random(5) + 1, random(5) + 1);
+        this.effect = Math.floor(random(6));
+    }
+}
+
+
+
 
 // definitions for the spaceship class
 class Spaceship extends Sprite {
@@ -10,6 +28,7 @@ class Spaceship extends Sprite {
         this.r = 10;
         this.xdir = 0; // Initial horizontal direction (no movement)
         this.lives = 10;
+        this.activePower = NONE;
     }
 
     // dir is a number either -1 (left) or 1 (right)

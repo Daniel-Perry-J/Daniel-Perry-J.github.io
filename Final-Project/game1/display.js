@@ -9,6 +9,7 @@ class Display {
 
     show() {
         fill(255);
+        textAlign(RIGHT, CENTER);
         textSize(this.textsize);
         text(this.text, this.position.x, this.position.y);
     }

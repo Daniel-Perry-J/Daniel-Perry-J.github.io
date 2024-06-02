@@ -1,6 +1,6 @@
 // globals
 
-// varibles
+// variables
 let spaceship = null;
 let score = 0;
 let highscore = 0;
@@ -8,15 +8,22 @@ let time = 0; // in seconds
 let logger = false;
 let gameover = false;
 
+// currencies
+let stardust = 0;
+let starcores = 0;
+
 // sprite lists
 let bullets = [];
 let enemies = [];
+let powerups = [];
 
 // modifiers
+let baseMultiplier = 1.0;
 let multiplier = 1.0;
+let baseDifficulty = 1.0;
 let difficulty = 1.0;
 let speed = 1.0;
-let lspeed = speed;
+let lspeed = 1.0;
 
 // constants
 
@@ -54,6 +61,19 @@ function restartGame() {
 }
 
 // called to load anything before launching
+// DOM
+let sfxVolumeSlider = 0.1;
+let musicVolumeSlider = 0.25;
+let sfxLabel;
+let musicLabel;
+// sound
+let sfx = [];
+let sfxPath = "";
+let music = [];
+let musicPath = "";
+let numSFXs = 6;
+let numMusic = 1;
+// images
 let bgImg = [];
 let imgPath = "";
 let imgX = 0;
@@ -85,6 +105,19 @@ function preload() {
         imgPath = "./assets/imgs/bgs/spacebg_" + i + ".png";
         bgImg[i] = loadImage(imgPath);
     }
+
+    for (let i = 0; i < numSFXs; i++) {
+        sfxPath = "./assets/sounds/sfx_" + i + ".wav";
+        if (i > 1) {
+            sfxPath = "./assets/sounds/sfx_" + i + ".mp3";
+        }
+        sfx[i] = loadSound(sfxPath);
+    }
+
+    for (let i = 0; i < numMusic; i++) {
+        musicPath = "./assets/music/ambiance_" + i + ".mp3";
+        music[i] = loadSound(musicPath);
+    }
 }
 
 // called on first launch
@@ -98,8 +131,24 @@ function setup() {
     createCanvas(windowWidth, windowHeight);
     spaceship = new Spaceship();
     highscore = getHighScore();
-    topBuffer = Math.floor(random(numImgs));
-    bottomBuffer = Math.floor(random(numImgs));
+    topBuffer = Math.floor(/*random(numImgs)*/0);
+    bottomBuffer = Math.floor(/*random(numImgs)*/0);
+
+    // play background music on repeat
+    music[0].loop();
+    // adjust volume
+    music[0].setVolume(musicVolume);
+    sfx.forEach((s) => s.setVolume(sfxVolume));
+
+    // create DOM elements
+    musicVolumeSlider = createSlider(0, 0.75, 0.25, 0.01);
+    sfxVolumeSlider = createSlider(0, 0.5, 0.1, 0.01);
+    musicLabel = createP("Music Volume");
+    sfxLabel = createP("SFX Volume");
+    musicVolumeSlider.style('z-index', -1);
+    sfxVolumeSlider.style('z-index', -1);
+    musicLabel.style('z-index', -1);
+    sfxLabel.style('z-index', -1);
 }
 
 // forces the screen to landscape if possible
@@ -127,7 +176,7 @@ function drawBackground() {
     // choose a new random img
     if (imgY + speed * 1.25 * state >= height) {
         bottomBuffer = topBuffer;
-        topBuffer = Math.floor(random(numImgs));
+        topBuffer = Math.floor(/*random(numImgs)*/0);
     } else {
         // set img coordinates
         image(bgImg[topBuffer], imgX, imgY-height, width, height);  // double imgs for smooth layering
@@ -143,9 +192,24 @@ function drawBackground() {
 function draw() {
     drawBackground();
 
+    // Prevent Clicking to fast because it causes problems
+    if (frameCount % 60 == 0) {
+        timeout--;
+    }
+
     if (state == MENU) {
         displayMenu();
-    } else {
+    } else if (state == SHOP) {
+        displayShop();
+    } else if (state == UPGRADES) {
+        displayUpgrades();
+    } else if (state == STATS) {
+        displayStats();
+    } else if (state == CUSTOM) {
+        displayCustomizationMenu();
+    } else if (state == SETTINGS) {
+        displaySettings();
+    } else if (state == GAME || state == PAUSED) {
         displayScore();
         displayTime();
         displayLives();
@@ -175,8 +239,8 @@ function draw() {
             }
 
             // update difficulty and multipliers
-            difficulty = 1.0 + (0.1) * time;
-            multiplier = 1.0 + (0.1) * Math.floor(time/15);
+            difficulty = baseDifficulty + (0.1) * time;
+            multiplier = baseMultiplier + (0.1) * Math.floor(time/15);
 
             checkCollisions()
 
@@ -209,6 +273,9 @@ function draw() {
             // code to run every 60 frames
             if ((Math.floor(frameCount/speed) % 60 === 0) && (state == GAME)) {
                 time++;
+                if (Math.floor(random(120)) == 1) {
+                    powerups.push(new Powerup());
+                }
                 if (logger && frameCount % 500) {
                     console.log(`Player Info`);
                     console.log(`player_x = ${spaceship.position.x}`);
@@ -240,6 +307,7 @@ function checkCollisions() {
                         j--;
                         i--;
                         score += Math.floor(100 * multiplier);
+                        sfx[1].play();
                     } else {
                         enemies[j].lives -= 1;
                         enemies[j].difficulty -= 5;
@@ -258,6 +326,7 @@ function checkCollisions() {
             spaceship.lives -= (Math.floor(enemies[j].difficulty / 5) + 1) * 5;
             enemies = [];
             bullets = [];
+            sfx[2].play();
             break;
         }
     }
@@ -329,14 +398,7 @@ function fireBullets() {
     if (bulletsHeld && frameCount - lastFrameFired > bulletCooldown) {
         bullets.push(new Bullet(spaceship.position.x, spaceship.position.y));
         lastFrameFired = frameCount;
+        sfx[0].play();
     }
 }
 
-// TODO : Add the following classes
-// Hazards
-// Projectiles sub class of Hazards
-// Enemy should be a sub class of Hazards
-// Player generated Projectiles should not be a hazard to the player
-// Space Debris will be a Hazard
-// Power ups can be collected from special Enemies or randomly if you are close to losing
-// More ...
