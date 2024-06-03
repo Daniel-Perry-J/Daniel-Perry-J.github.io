@@ -7,6 +7,7 @@ let timeout = 0;
 let mouseDown = false;
 let musicVolume = 0.75;
 let sfxVolume = 0.25;
+let mouseOver = -1;
 
 function displayMenu() {
     let menuOptions = ["Play Game", "Shop", "Upgrades", "Stats", "Customization", "Settings"];
@@ -21,16 +22,15 @@ function displayButtons(options, action) {
     let rectMargin = 20;
     let totalHeight = (rectHeight + rectMargin) * options.length;
     let startY = height / 2 - totalHeight / 2;
-    let mouseOver = false;
 
     for (let i = 0; i < options.length; i++) {
         let y = startY + i * (rectHeight + rectMargin);
         // Check if the mouse is over the rectangle
         if (mouseX > width / 2 - 100 && mouseX < width / 2 + 100 &&
             mouseY > y && mouseY < y + rectHeight) {
-            mouseOver = true;
-            if (mouseOver) {
-                sfx[4].play();
+            if (mouseOver != i) {
+                sfx[4].play(); // Hover Sound
+                mouseOver = i;
             }
             fill(100); // Hover color
             if (mouseIsPressed && timeout <= 0) {
@@ -44,7 +44,6 @@ function displayButtons(options, action) {
                 break;
             }
         } else {
-            mouseOver = false;
             fill(255); // Default color
         }
         rect(width / 2 - 100, y, 200, rectHeight, 10);

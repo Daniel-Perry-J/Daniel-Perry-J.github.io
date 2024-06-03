@@ -62,8 +62,8 @@ function restartGame() {
 
 // called to load anything before launching
 // DOM
-let sfxVolumeSlider = 0.1;
-let musicVolumeSlider = 0.25;
+let sfxVolumeSlider;
+let musicVolumeSlider;
 let sfxLabel;
 let musicLabel;
 // sound
