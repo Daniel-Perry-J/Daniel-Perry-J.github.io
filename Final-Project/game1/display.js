@@ -1,27 +1,42 @@
 
 // display
 class Display {
-    constructor(text, x, y, textsize) {
+    constructor(text, x, y, size, horizontalAlign, verticalAlign) {
         this.text = text;
         this.position = new Vector(x, y);
-        this.textsize = textsize;
+        this.size = size;
+        this.horizontalAlign = horizontalAlign;
+        this.verticalAlign = verticalAlign;
     }
 
     show() {
         fill(255);
-        textAlign(RIGHT, CENTER);
-        textSize(this.textsize);
+        textAlign(this.horizontalAlign, this.verticalAlign);
+        textSize(this.size);
         text(this.text, this.position.x, this.position.y);
     }
     
 }
 
-let xoffset = 150;
+let xoffset = 10;
+let yoffset = 10;
+let fontSize = 25;
+function updateDisplays() {
+    if (width < 400) {
+        fontSize = 10;
+    } else if (width < 600) {
+        fontSize = 15;
+    } else if (width < 800) {
+        fontSize = 20;
+    } else if (width < 1000) {
+        fontSize = 25;
+    }
+}
 
 function displayGameover() {
-    gameoverDisplay = new Display("Game Over!", width/2 - 100, height/2, 100);
+    gameoverDisplay = new Display("Game Over!", width/2, height/2, fontSize*4, CENTER, CENTER);
     gameoverDisplay.show();
-    otherDisplay = new Display("Touch the screen, Click the mouse, or Press any key to play again", width/3, height*3/4, 25);
+    otherDisplay = new Display("Touch the screen\nClick the mouse\nPress any key to play again", width/2, height*3/4, fontSize*2, CENTER, CENTER);
     otherDisplay.show();
 }
 
@@ -29,18 +44,23 @@ function displayScore() {
     if (score >= highscore) {
         highscore = score;
     }
-    scoreDisplay = new Display("Score : " + nZeros(score, 8) + "\nHighScore : " + nZeros(highscore, 8), width - xoffset, height/6 - 50, 15);
+    scoreDisplay = new Display("Score : " + nZeros(score, 8) + "\nHighScore : " + nZeros(highscore, 8), width - xoffset, height/6 - 50, fontSize, RIGHT, CENTER);
     scoreDisplay.show();
 }
 
 function displayTime() {
-    timeDisplay = new Display("" + nZeros(Math.floor(time/60), 2) + ":" + nZeros(time%60, 2), width - xoffset, height/6 - 80, 15);
+    timeDisplay = new Display("Time : " + nZeros(Math.floor(time/60), 2) + ":" + nZeros(time%60, 2), width - xoffset, 50, fontSize, RIGHT, CENTER);
     timeDisplay.show();
 }
 
 function displayLives() {
-    lifeDisplay = new Display("Lives : " + nZeros(spaceship.lives, 4), width - xoffset, height/6 - 100, 15);
+    lifeDisplay = new Display("Lives : " + nZeros(spaceship.lives, 4), width - xoffset, 25, fontSize, RIGHT, CENTER);
     lifeDisplay.show();
+}
+
+function displayCurrency() {
+    currencyDisplay = new Display("Stardust : " + nZeros(stardust, 4) + "\nStarCores : " + nZeros(starcores, 2), 10, 10, fontSize, LEFT, TOP);
+    currencyDisplay.show();
 }
 
 // function twoZeros(str) {

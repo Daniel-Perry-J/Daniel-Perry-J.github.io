@@ -12,6 +12,8 @@ function keyPressed() {
         bulletsHeld = true;
     } else if (keyCode === ESCAPE) {
         togglePauseMenu();
+    } else if (key === 't') {
+        gameover = true;
     }
 }
 

@@ -124,11 +124,12 @@ function preload() {
 function setup() {
     // background the first canvas
     const container = document.getElementById("gameContainer");
-    if (container.className != "hidden") {
+    if (container != null && container.className != "hidden") {
         container.className = "hidden";
+        container.remove();
     }
     // setOrientation();
-    createCanvas(windowWidth, windowHeight);
+    createCanvas(windowWidth*0.6, windowHeight);
     spaceship = new Spaceship();
     highscore = getHighScore();
     topBuffer = Math.floor(/*random(numImgs)*/0);
@@ -164,7 +165,8 @@ function setup() {
 
 // called whenever I resize the window
 function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
+    resizeCanvas(windowWidth*0.6, windowHeight);
+    updateDisplays();
 }
 
 // also called each frame
@@ -191,6 +193,7 @@ function drawBackground() {
 // called every frame
 function draw() {
     drawBackground();
+    updateDisplays();
 
     // Prevent Clicking to fast because it causes problems
     if (frameCount % 60 == 0) {
@@ -201,6 +204,7 @@ function draw() {
         displayMenu();
     } else if (state == SHOP) {
         displayShop();
+        displayCurrency();
     } else if (state == UPGRADES) {
         displayUpgrades();
     } else if (state == STATS) {
@@ -213,6 +217,7 @@ function draw() {
         displayScore();
         displayTime();
         displayLives();
+        displayCurrency();
 
         if (spaceship.lives < 1) {
             gameover = true;

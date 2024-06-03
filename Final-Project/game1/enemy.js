@@ -17,6 +17,7 @@ class Enemy extends Sprite {
         this.velocity = new Vector(this.initial_velocity.x, this.initial_velocity.y);
         this.size = new Vector(15, 15);
         this.r = Math.max(this.size.x, this.size.y);
+        this.reward = random(difficulty);
     }
 
     move() {

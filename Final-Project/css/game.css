@@ -17,8 +17,10 @@ body {
 }
 
 main {
-    width: 100%;
+    width: 60%;
     height: 100%;
+    position: static;
+    margin: 0 auto;
     display: block;
 }
 
@@ -36,3 +38,8 @@ main {
 .show {
     display: block;
 }
+
+/* .p5Canvas {
+    width: 100%;
+    margin: 0 auto;
+} */
