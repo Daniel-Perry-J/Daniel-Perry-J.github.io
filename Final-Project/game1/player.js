@@ -14,9 +14,6 @@ class Powerup extends Sprite {
     }
 }
 
-
-
-
 // definitions for the spaceship class
 class Spaceship extends Sprite {
     constructor() {
@@ -25,6 +22,10 @@ class Spaceship extends Sprite {
         super();
         this.position = new Vector(width / 2, height - 40);
         this.size = new Vector(20, 20);
+        this.velocity = new Vector(0, 0);
+        this.acceleration = new Vector(0, 0);
+        this.maxVelocity = 5;
+        this.minAcceleration = 0.1;
         this.r = 10;
         this.xdir = 0; // Initial horizontal direction (no movement)
         this.lives = 10;
@@ -38,7 +39,26 @@ class Spaceship extends Sprite {
 
     move() {
         // Update the position based on direction and speed
-        this.velocity.x = this.xdir * 5 * speed;
+        if (this.xdir > 0) {
+            this.acceleration.x = this.minAcceleration;
+        } else if (this.xdir < 0) {
+            this.acceleration.x = -this.minAcceleration;
+        } else {
+            this.acceleration.x = 0;
+        }
+        if (Math.abs(this.velocity.x) >= this.maxVelocity * speed) {
+            this.velocity.x = this.xdir * this.maxVelocity * speed;
+        } else {
+            if (this.acceleration.x == 0) {
+                if (this.velocity.x > 0) {
+                    this.velocity.x -= this.minAcceleration * speed;
+                } else if (this.velocity.x < 0) {
+                    this.velocity.x += this.minAcceleration * speed;
+                }
+            } else {
+                this.velocity.x += this.acceleration.x * speed * 5;
+            }
+        } 
         addVector(this.position, this.velocity);
     }
 
