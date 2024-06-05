@@ -34,10 +34,23 @@ function updateDisplays() {
 }
 
 function displayGameover() {
-    gameoverDisplay = new Display("Game Over!", width/2, height/2, fontSize*4, CENTER, CENTER);
+    gameoverDisplay = new Display("Game Over!\nTry again in " + timeout + "secs", width/2, height/4, fontSize*4, CENTER, CENTER);
     gameoverDisplay.show();
-    otherDisplay = new Display("Touch the screen\nClick the mouse\nPress any key to play again", width/2, height*3/4, fontSize*2, CENTER, CENTER);
-    otherDisplay.show();
+    displayBack2Menu();
+}
+
+function displayBack2Menu() {
+    displayButtons(["Main Menu", "Try Again"], gameoverAction);
+}
+
+function gameoverAction(optionIndex) {
+    timeout = 1;
+    if (optionIndex == 0) {
+        state = MENU;
+    } else {
+        state = GAME;
+        restartGame();
+    }
 }
 
 function displayScore() {
@@ -54,7 +67,7 @@ function displayTime() {
 }
 
 function displayLives() {
-    lifeDisplay = new Display("Lives : " + nZeros(spaceship.lives, 4), width - xoffset, 25, fontSize, RIGHT, CENTER);
+    lifeDisplay = new Display("Lives : " + nZeros(spaceship.lives, 2), width - xoffset, 25, fontSize, RIGHT, CENTER);
     lifeDisplay.show();
 }
 

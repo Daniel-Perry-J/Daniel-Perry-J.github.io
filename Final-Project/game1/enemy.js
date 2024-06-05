@@ -12,7 +12,7 @@ class Enemy extends Sprite {
         super();
         this.difficulty = random(difficulty-Math.floor(difficulty/10)) + difficulty/10;
         this.lives = Math.floor(this.difficulty/5);
-        this.position = new Vector(random(width-this.r) + this.r, 0);
+        this.position = new Vector(random(width-(this.r*2+10)*2) + (this.r*2)+10, 0);
         this.initial_velocity = new Vector(0, random(5) + 1);
         this.velocity = new Vector(this.initial_velocity.x, this.initial_velocity.y);
         this.size = new Vector(15, 15);
@@ -61,3 +61,20 @@ class Enemy extends Sprite {
         return (d < this.r + spaceship.r);
     }
 }
+
+function spawn_enemies(difficulty) {
+    // limit the enemies per wave
+    if (enemies / 10 < Math.log10(wave*difficulty) + 1) {
+        if (wave < 10) {
+            let num = random(5) + 1;
+            for (let i = 0; i < num; i++) {
+                enemies.push(new Enemy(difficulty));
+            }
+        } else {
+            for (let i = 0; i < wave; i++) {
+                enemies.push(new Enemy(difficulty));
+            }
+        }
+    }
+}
+

@@ -46,6 +46,7 @@ function displayButtons(options, action) {
         } else {
             fill(255); // Default color
         }
+        rectMode(CORNER);
         rect(width / 2 - 100, y, 200, rectHeight, 10);
         fill(0);
         textAlign(CENTER, CENTER);
@@ -62,6 +63,7 @@ function menuAction(optionIndex) {
             // code to start the game
             state = GAME;
             speed = lspeed;
+            restartGame();
             break;
         case 1:
             // code to open the shop
@@ -182,7 +184,7 @@ function displaySettings() {
     sfxVolumeSlider.show();
     musicLabel.show();
     sfxLabel.show();
-    music[0].setVolume(musicVolume);
+    music.forEach((m) => m.setVolume(musicVolume));
     sfx.forEach((s) => s.setVolume(sfxVolume));
     displayButtons(settingOptions, settingsAction);
 }
@@ -209,5 +211,27 @@ function togglePauseMenu() {
     } else if (state == PAUSED) {
         speed = lspeed;
         state = GAME;
+    }
+}
+
+function displayPauseMenu() {
+    pauseDisplay = new Display("Game Paused", width/2, 150, fontSize*4, CENTER, TOP);
+    pauseDisplay.show();
+    let options = ["Resume", "Main Menu"];
+    displayButtons(options, pauseAction);
+}
+
+function pauseAction(optionIndex) {
+    timeout = 1;
+    switch (optionIndex) {
+        case 0:
+            speed = lspeed;
+            state = GAME;
+            break;
+        case 1:
+            state = MENU;
+            break;
+        default:
+            break;
     }
 }

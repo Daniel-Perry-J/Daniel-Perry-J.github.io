@@ -5,6 +5,9 @@ let spaceship = null;
 let score = 0;
 let highscore = 0;
 let time = 0; // in seconds
+let lastTime = 0;
+let wave = 0;
+let enemiesDefeated = 0;
 let logger = false;
 let gameover = false;
 
@@ -54,10 +57,15 @@ function restartGame() {
     enemies = [];
     score = 0;
     time = 0;
+    lastTime = 0;
+    lastFrameFired = 0;
+    wave = 0;
+    enemiesDefeated = 0;
     multiplier = 1.0;
     difficulty = 1.0;
     speed = lspeed;
-    setup();
+    spaceship = new Spaceship();
+    // setup();
 }
 
 // called to load anything before launching
@@ -129,7 +137,11 @@ function setup() {
         container.remove();
     }
     // setOrientation();
-    createCanvas(windowWidth*0.6, windowHeight);
+    if (windowWidth <= 650) {
+        createCanvas(windowWidth, windowHeight);
+    } else {
+        createCanvas(windowWidth*0.6, windowHeight);
+    }
     spaceship = new Spaceship();
     highscore = getHighScore();
     topBuffer = Math.floor(/*random(numImgs)*/0);
@@ -165,7 +177,11 @@ function setup() {
 
 // called whenever I resize the window
 function windowResized() {
-    resizeCanvas(windowWidth*0.6, windowHeight);
+    if (windowWidth <= 650) {
+        resizeCanvas(windowWidth, windowHeight);
+    } else {
+        resizeCanvas(windowWidth*0.6, windowHeight);
+    }
     updateDisplays();
 }
 
@@ -196,7 +212,7 @@ function draw() {
     updateDisplays();
 
     // Prevent Clicking to fast because it causes problems
-    if (frameCount % 60 == 0) {
+    if (frameCount % 60 == 0 && timeout > 0) {
         timeout--;
     }
 
@@ -207,6 +223,7 @@ function draw() {
         displayCurrency();
     } else if (state == UPGRADES) {
         displayUpgrades();
+        displayCurrency();
     } else if (state == STATS) {
         displayStats();
     } else if (state == CUSTOM) {
@@ -214,6 +231,8 @@ function draw() {
     } else if (state == SETTINGS) {
         displaySettings();
     } else if (state == GAME || state == PAUSED) {
+        if (state == PAUSED)
+            displayPauseMenu();
         displayScore();
         displayTime();
         displayLives();
@@ -226,10 +245,19 @@ function draw() {
         if (gameover) {
             displayGameover();
             saveHighScore();
-            return;
         } else {
             // runs when !gameover
             fireBullets();
+
+            if (touches.length == 0 && windowWidth <= 600)
+                spaceship.setDir(0);
+            if (windowWidth > 600) {
+                if (keysDown[0] == 1) {
+                    spaceship.setDir(1);
+                } else if (keysDown[1] == 1) {
+                    spaceship.setDir(-1);
+                }
+            }
 
             spaceship.show();
             spaceship.move();
@@ -244,36 +272,39 @@ function draw() {
             }
 
             // update difficulty and multipliers
-            difficulty = baseDifficulty + (0.1) * time;
+            difficulty = baseDifficulty + (0.1) * time + wave/2;
             multiplier = baseMultiplier + (0.1) * Math.floor(time/15);
 
-            checkCollisions()
-
-            // Prevent player from escaping canvas
-            if (spaceship.position.x <= spaceship.size.x) {
-                spaceship.position.x = width - spaceship.size.x - 1;
-            } else if (spaceship.position.x >= width - spaceship.size.x) {
-                spaceship.position.x = spaceship.size.x + 1;
-            }
-
-            // Prevent enemies from leaving canvas
-            for (let j = enemies.length - 1; j >= 0; j--) {
-                if (enemies[j].position.y >= height - enemies[j].size.y) {
-                    //enemies[j].position.y = enemies[j].size.y + 1;
-                    enemies.splice(j, 1);
+            // update wave number based on time or kills
+            if (wave < 10) {
+                if (enemiesDefeated > 5) {
+                    enemiesDefeated = 0;
+                    wave++;
+                    lastTime = time;
+                } else if (time - lastTime > 5) {
+                    wave++;
+                    lastTime = time;
+                }
+            } else {
+                if (enemiesDefeated > difficulty * 7) {
+                    enemiesDefeated = 0;
+                    wave+=5;
+                    lastTime = time;
+                } else if (time - lastTime > 20) {
+                    wave++;
+                    lastTime = time;
                 }
             }
 
-            // Delete any bullets leaving the canvas
-            for (let i = bullets.length - 1; i >= 0; i--) {
-                if (bullets[i].position.y <= bullets[i].size.y) {
-                    bullets.splice(i, 1);
-                }
-            }
+            checkCollisions();
 
-            // Spawn enemies randomly
-            if (Math.floor(frameCount/speed) % Math.floor(60/(difficulty*0.25)) === 0)
-                enemies.push(new Enemy(difficulty));
+            playerWarp();
+
+            cleanup();
+
+            // Spawn enemies randomly (every second)
+            if (Math.floor(frameCount/speed) % Math.floor(60) === 0)
+                spawn_enemies(difficulty);
 
             // code to run every 60 frames
             if ((Math.floor(frameCount/speed) % 60 === 0) && (state == GAME)) {
@@ -295,6 +326,34 @@ function draw() {
                 }
             }
         }
+    }
+}
+
+// Removes any excess sprites from the sprite lists
+function cleanup() {
+    // Delete any enemies leaving the canvas
+    for (let j = enemies.length - 1; j >= 0; j--) {
+        if (enemies[j].position.y >= height - enemies[j].size.y) {
+            //enemies[j].position.y = enemies[j].size.y + 1;
+            enemies.splice(j, 1);
+        }
+    }
+
+    // Delete any bullets leaving the canvas
+    for (let i = bullets.length - 1; i >= 0; i--) {
+        if (bullets[i].position.y <= bullets[i].size.y) {
+            bullets.splice(i, 1);
+        }
+    }
+}
+
+// Warps the player to the other side of the screen
+function playerWarp() {
+    // Prevent player from escaping canvas
+    if (spaceship.position.x <= spaceship.size.x) {
+        spaceship.position.x = width - spaceship.size.x - 1;
+    } else if (spaceship.position.x >= width - spaceship.size.x) {
+        spaceship.position.x = spaceship.size.x + 1;
     }
 }
 
@@ -329,6 +388,9 @@ function checkCollisions() {
         // enemy hits the player
         if (enemies[j].hits(spaceship)) {
             spaceship.lives -= (Math.floor(enemies[j].difficulty / 5) + 1) * 5;
+            if (spaceship.lives < 1) {
+                timeout = 5;
+            }
             enemies = [];
             bullets = [];
             sfx[2].play();
@@ -400,10 +462,11 @@ let bulletCooldown = 20/speed;  // 20 frames
 let bulletsHeld = false;
 
 function fireBullets() {
-    if (bulletsHeld && frameCount - lastFrameFired > bulletCooldown) {
-        bullets.push(new Bullet(spaceship.position.x, spaceship.position.y));
-        lastFrameFired = frameCount;
-        sfx[0].play();
+    if (state == GAME && !gameover) {
+        if (bulletsHeld && frameCount - lastFrameFired > bulletCooldown) {
+            bullets.push(new Bullet(spaceship.position.x, spaceship.position.y, new Vector(0, -7.5)));
+            lastFrameFired = frameCount;
+            sfx[0].play();
+        }
     }
 }
-

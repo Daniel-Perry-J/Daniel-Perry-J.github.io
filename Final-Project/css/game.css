@@ -24,11 +24,15 @@ main {
     display: block;
 }
 
-/* @media (orientation: landscape) {
-    #gameContainer {
-        transform: none;
+@media only screen and (max-width: 650px) {
+    main {
+        width: 100%;
+        position: static;
+        margin: 0 auto;
+        display: block;
     }
-} */
+}
+  
 
 .hidden {
     z-index: -1;

@@ -7,16 +7,20 @@ class Projectile extends Hazard {
 
 // definitions for the Bullet class
 class Bullet extends Projectile {
-    constructor(x, y) {
+    constructor(x, y, v1) {
         super();
-        this.position = new Vector(x, y);
-        this.velocity = new Vector(0, -5 * speed);
-        this.size = new Vector(16, 16);
-        this.r = 8;
+        this.position = new Vector(random(20)+x-10, y);
+        this.velocity = v1;
+        this.xdir = (v1.x>0) ? 1 : -1;
+        this.size = new Vector(10, 10);
+        this.r = 5;
     }
 
     move() {
-        this.velocity.y = -5 * speed * state;
+        this.velocity.y = -7.5 * speed * state;
+        if (this.velocity.x = 0) {
+            this.velocity.x = this.xdir * 7.5 * speed * state;
+        }
         if (state == GAME) {
             addVector(this.position, this.velocity);
         }
