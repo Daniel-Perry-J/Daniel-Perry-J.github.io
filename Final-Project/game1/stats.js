@@ -4,18 +4,29 @@ let stats = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 let statMap = new Map();
 
+let expires = 100;
+
 function loadStats() {
     let i = 0;
     statNames.forEach((sname) => {
-        stats[i] = getCookie(sname);
+        stats[i] = (Number(getCookie(sname)) != NAN ? Number(getCookie(sname)) : 0);
         statMap.set(sname, stats[i]);
         i++;
     });
 }
 
+function updateStat(sname) {
+    let index = statNames.indexOf(sname);
+    if (index != -1) {
+        setCookie(sname, stats[index], expires);
+    } else {
+        console.error(sname + " is not a Valid stat name!");
+    }
+}
+
 function updateStats() {
     let i = 0;
-    statNames.forEach((sname) => setCookie(sname, stats[i++], 100));
+    statNames.forEach((sname) => setCookie(sname, stats[i++], expires));
 }
 
 function debugStats() {

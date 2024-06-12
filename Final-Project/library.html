@@ -30,18 +30,18 @@
             <div class="dropdown">
                 <h3 onclick="toggleDropdown()">Achievements (top score / totals)</h3>
                 <div class="dropdown-content">
-                    <ul class="flex-rows">
+                    <ul class="flex-rows" id="stats-container">
                         <li>
                             <h4>Score</h4>
                             <ul>
                                 <li>
-                                    <p id="HighScore">HighScore : 0</p>
+                                    <p id="highscore">HighScore : 0</p>
                                 </li>
                                 <li>
-                                    <p id="LifetimeScore">TotalScore : 0</p>
+                                    <p id="totalscore">TotalScore : 0</p>
                                 </li>
                                 <li>
-                                    <p id="Multplier">Multiplier : 0.5x</p>
+                                    <p id="multiplier">Multiplier : 0.5x</p>
                                 </li>
                             </ul>
                         </li>
@@ -49,19 +49,19 @@
                             <h4>Progression</h4>
                             <ul>
                                 <li>
-                                    <p id="Unlocks">Unlocks : 1/1 (100%)</p>
+                                    <p id="unlocks">Unlocks : 1/1 (100%)</p>
                                 </li>
                                 <li>
-                                    <p id="Upgrades">Upgrades : 0</p>
+                                    <p id="upgrades">Upgrades : 0</p>
                                 </li>
                                 <li>
-                                    <p id="Wave">Wave : 0</p>
+                                    <p id="wave">Wave : 0</p>
                                 </li>
                                 <li>
-                                    <p id="Level">Level : 0</p>
+                                    <p id="level">Level : 0</p>
                                 </li>
                                 <li>
-                                    <p id="Presitige">Prestiges : 0</p>
+                                    <p id="prestige">Prestiges : 0</p>
                                 </li>
                             </ul>
                         </li>
@@ -69,22 +69,23 @@
                             <h4>Totals</h4>
                             <ul>
                                 <li>
-                                    <p id="Defeats">Defeats : 0</p>
+                                    <p id="defeats">Defeats : 0</p>
                                 </li>
                                 <li>
-                                    <p id="Enemy-Counter">Enemies Defeated : 0</p>
+                                    <p id="enemiesDefeated">Enemies Defeated : 0</p>
                                 </li>
                                 <li>
-                                    <p id="Boss-Counter">Bosses Defeated : 0</p>
+                                    <p id="bossesDefeated">Bosses Defeated : 0</p>
                                 </li>
                                 <li>
-                                    <p id="Stardust-Counter">Total Star Dust Collected : 0</p>
+                                    <p id="totalStardust">Total Star Dust Collected : 0</p>
                                 </li>
                                 <li>
-                                    <p id="Time-Counter">Time Spent in Game : 0 days, 0 hours, 0 minutes, 0 seconds</p>
+                                    <p id="totalTimeSpent">Time Spent in Game : 0 days, 0 hours, 0 minutes, 0 seconds
+                                    </p>
                                 </li>
                                 <li>
-                                    <p id="Distance">Total Distance traveled : 0 (ly), 0 (km)</p>
+                                    <p id="totalDistance">Total Distance traveled : 0 (ly), 0 (km)</p>
                                 </li>
                             </ul>
                         </li>
@@ -106,8 +107,46 @@
         }
     </script>
     <script>
-        date = document.lastModified();
+        // cookie frame work
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cname) {
+            let name = cname + "=";
+            let ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function checkCookie() {
+            let user = getCookie("username");
+            if (user != "") {
+                alert("Welcome again " + user);
+            } else {
+                user = prompt("Please enter your name:", "");
+                if (user != "" && user != null) {
+                    setCookie("username", user, 365);
+                }
+            }
+        }
+        var date = document.lastModified;
         document.write(`Last Updated : ${date}`);
+        var statsNames = ["highscore", "totalscore", "multiplier", "unlocks", "upgrades", "wave", "level", "prestige", "defeats", "enemiesDefeated", "bossesDefeated", "totalStardust", "totalTimeSpent", "totalDistance"];
+        statsNames.forEach(element => {
+            document.getElementById(element).innerHTML = `${element} : ${getCookie(element) === "" ? 0 : getCookie(element)}`;
+        });
     </script>
 </footer>
 

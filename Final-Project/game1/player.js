@@ -81,6 +81,7 @@ class Spaceship extends Sprite {
     }
 
     move() {
+        this.maxVelocity = (5*playerSpeed) + extraSpeed;
         // Set accelerations
         if (Math.abs(this.acceleration.x) < this.maxAcceleration && Math.abs(this.xdir) > 0) {
             this.acceleration.x += this.minAcceleration * this.xdir;

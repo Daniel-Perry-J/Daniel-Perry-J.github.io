@@ -43,8 +43,10 @@ header {
 
 .description {
     text-align: left;
-    background-color: #4eaa4f;
+    background-color: #61d463;
     padding: 1em;
+    font-size: medium;
+    font-weight: bold;
 }
 
 figure {
@@ -146,4 +148,16 @@ h3:hover {
 .flex-rows>li {
     background-color: #f1f1f1;
     padding: 1em;
+}
+
+footer {
+    background-color: #2a5a2b;
+    padding: 1em;
+    border-radius: 5px;
+    color: #fffdfd;
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    text-decoration-color: #e7d914;
+    font-size: medium;
 }

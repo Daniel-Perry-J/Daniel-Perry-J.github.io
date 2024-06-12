@@ -27,6 +27,7 @@ let baseDifficulty = 1.0;
 let difficulty = 1.0;
 let speed = 1.0;
 let lspeed = 1.0;
+let playerSpeed = 1.0;
 
 // constants
 
@@ -274,6 +275,9 @@ function draw() {
             // update difficulty and multipliers
             difficulty = baseDifficulty + (0.1) * time + wave/2;
             multiplier = baseMultiplier + (0.1) * Math.floor(time/15);
+
+            // improve player speed with time
+            playerSpeed = (0.1) * time + 1.0;
 
             // update wave number based on time or kills
             if (wave < 10) {
