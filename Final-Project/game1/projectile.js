@@ -1,5 +1,5 @@
 
-class Projectile extends Hazard {
+class Projectile {
     constructor() {
         super();
     }
