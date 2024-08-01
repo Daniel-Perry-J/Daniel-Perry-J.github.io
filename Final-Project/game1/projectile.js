@@ -1,7 +1,7 @@
 
 class Projectile {
     constructor() {
-        super();
+        // Override this constructor
     }
 }
 
