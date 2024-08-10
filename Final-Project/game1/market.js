@@ -141,23 +141,3 @@ class CurrencyAdjustedItem extends ShopItem {
         return this.basePrice;
     }
 }
-
-// Example usage:
-// const powerup = new Item(100); // Fixed price
-// const upgrade = new Upgrade(200); // Price scales exponentially
-// const boost = new Boost(50, 100); // Price increases with each unit sold, up to 100 units
-// const specialItem = new CurrencyAdjustedItem(300, 10, 50); // After 10 units sold, requires secondary currency
-
-// // Apply a random sale to an item
-// applyRandomSale(powerup);
-
-// // Sell some items
-// powerup.sell();
-// upgrade.sell();
-// boost.sell();
-// specialItem.sell();
-
-// console.log(powerup.price); // Outputs price after sale
-// console.log(upgrade.price); // Outputs exponentially scaled price
-// console.log(boost.price); // Outputs price based on units sold
-// console.log(specialItem.price); // Outputs price in primary or both currencies

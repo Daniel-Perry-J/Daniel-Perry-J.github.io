@@ -28,6 +28,9 @@ let difficulty = 1.0;
 let speed = 1.0;
 let lspeed = 1.0;
 let playerSpeed = 1.0;
+let extraLife = 0.0;
+let extraDamage = 0.0;
+let extraBullets = 0.0;
 
 // constants
 
@@ -69,12 +72,12 @@ function restartGame() {
     // setup();
 }
 
-// called to load anything before launching
 // DOM
 let sfxVolumeSlider;
 let musicVolumeSlider;
 let sfxLabel;
 let musicLabel;
+
 // sound
 let sfx = [];
 let sfxPath = "";
@@ -82,6 +85,7 @@ let music = [];
 let musicPath = "";
 let numSFXs = 6;
 let numMusic = 1;
+
 // images
 let bgImg = [];
 let imgPath = "";
@@ -90,6 +94,8 @@ let imgY = 0;
 let numImgs = 14;
 let topBuffer = 0;
 let bottomBuffer = 0;
+
+// load all assets before launch to avoid delays
 function preload() {
     // Display loading screen before p5.js loads in
     const container = document.getElementById("gameContainer");
@@ -164,17 +170,6 @@ function setup() {
     musicLabel.style('z-index', -1);
     sfxLabel.style('z-index', -1);
 }
-
-// forces the screen to landscape if possible
-// function setOrientation() {
-//     if (screen.orientation && screen.orientation.lock) {
-//         screen.orientation.lock('landscape').catch(err => {
-//             console.error('Orientation lock failed: ', err);
-//         });
-//     } else {
-//         console.warn('Orientation lock is not supported on this device.');
-//     }
-// }
 
 // called whenever I resize the window
 function windowResized() {
@@ -378,7 +373,7 @@ function checkCollisions() {
                         sfx[1].play();
                     } else {
                         enemies[j].lives -= 1;
-                        enemies[j].difficulty -= 5;
+                        bullets.splice(i, 1);
                         score += Math.floor(10 * multiplier);
                     }
                     break;
