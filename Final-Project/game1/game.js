@@ -1,4 +1,5 @@
 // globals
+let NAN = NaN;
 
 // variables
 let spaceship = null;
@@ -133,6 +134,8 @@ function preload() {
         musicPath = "./assets/music/ambiance_" + i + ".mp3";
         music[i] = loadSound(musicPath);
     }
+
+    loadStats();
 }
 
 // called on first launch
@@ -241,6 +244,7 @@ function draw() {
         if (gameover) {
             displayGameover();
             saveHighScore();
+            saveStats();
         } else {
             // runs when !gameover
             fireBullets();
@@ -370,6 +374,7 @@ function checkCollisions() {
                         j--;
                         i--;
                         score += Math.floor(100 * multiplier);
+                        enemiesDefeated += 1;
                         sfx[1].play();
                     } else {
                         enemies[j].lives -= 1;
@@ -453,6 +458,10 @@ if (user != "") {
     setCookie("username", user, 365);
     }
 }
+}
+
+function logCookieData() {
+    console.log(`${document.cookie.split(';')}`);
 }
 
 // bullets
